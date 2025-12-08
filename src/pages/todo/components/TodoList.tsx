@@ -1,7 +1,9 @@
 import { Fragment } from "react/jsx-runtime";
-import type { Todo } from "../../../type";
-export default function TodoList({todos}:{todos:Todo[]})
+
+import { useTodoContext } from "../../../contexts/TodoContext";
+export default function TodoList()
 {
+    const {todo} = useTodoContext()
     return(
         <Fragment>
       <div className="w-100 mx-auto px-8 py-6 bg-white rounded-xl border border-gray-200 shadow-sm">
@@ -9,7 +11,7 @@ export default function TodoList({todos}:{todos:Todo[]})
                 <br />
                 <ul>
                     {
-                        todos.map((todo) => (
+                        todo.map((todo) => (
                             <li className="py-2 px-2 border border-gray-200 rounded-lg mb-2">{todo.text}</li>
                         ))
                     }

@@ -1,15 +1,17 @@
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import CreateForm from "./components/CreateFrom";
 import type { Todo } from "../../type";
 import TodoList from "./components/TodoList";
+import TodoProvider from "../../contexts/TodoContext";
 export default function TodoPage()
 {
   
-    const [todos,setTodos] = useState<Todo[]>([]);
     return (
         <Fragment>
-        <CreateForm todos={todos} setTodos={setTodos as any}/>
-        <TodoList todos = {todos}/>
+          <TodoProvider>
+            <CreateForm />
+            <TodoList />
+          </TodoProvider>
         </Fragment>
         
     )
