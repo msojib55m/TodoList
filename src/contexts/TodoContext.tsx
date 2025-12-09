@@ -3,13 +3,17 @@ import type { Todo } from "../type";
 
 interface TodoContextType{
     todo: Todo[],
-    setTodos: Dispatch<SetStateAction<Todo[]>>
+    setTodos: Dispatch<SetStateAction<Todo[]>>,
+    deleteTodo:(id:number)=>void;
 };
 
 const initialValue: TodoContextType = {
     todo: [],
-    setTodos: () => {}, // function placeholder
+    setTodos: () => {}, 
+    deleteTodo() {
+    },
 };
+
 
 
 const TodoContext = createContext<TodoContextType>(initialValue);
@@ -17,6 +21,10 @@ export default function TodoProvider({children}:{children:ReactNode})
 {
     const [todo,setTodos] = useState<Todo[]>([]);
     const [isMounted,setIsMounted] = useState<boolean>(false);
+    function deleteTodo(id:number)
+{
+      setTodos((prevTodos:any) => prevTodos.filter((todo:any) => todo.id !== id));
+}
     useEffect(()=>{
         if(!isMounted)
         {
@@ -33,7 +41,7 @@ export default function TodoProvider({children}:{children:ReactNode})
     },[todo])
     return(
         <Fragment>
-            <TodoContext.Provider value={{todo,setTodos}}>
+            <TodoContext.Provider value={{todo,setTodos,deleteTodo}}>
                 {children}
             </TodoContext.Provider>
         </Fragment>

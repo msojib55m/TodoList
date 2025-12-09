@@ -1,11 +1,33 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import type { Todo } from "../../../type";
 import { useTodoContext } from "../../../contexts/TodoContext";
+import { useLocation } from "react-router";
 
 export default function CreateForm() {
     const { todo, setTodos } = useTodoContext();
     const [todoInput, setTodoInput] = useState<string>("");
+    const {search} = useLocation();
+    const [updateData,setUpdateData] = useState<Todo | null>(null);
+     useEffect(() => {
 
+        const params = new URLSearchParams(search);
+        console.log(params)
+        const id = params.get("id");
+
+        if (id == null) return;
+
+        const todoToEdit = todo.find((todo) => todo.id === parseInt(id));
+        if (todoToEdit) {
+            setUpdateData({ ...todoToEdit });
+            setTodoInput(todoToEdit.text);
+        }
+
+        return () => {
+            setUpdateData(null);
+            setTodoInput("");
+        }
+
+    }, [search, todo]);
     function addTodo() {
         if (todoInput.trim() === "") return;
 
@@ -14,6 +36,10 @@ export default function CreateForm() {
 
         setTodos((prev) => [...prev, newTodo]);
         setTodoInput("");
+    }
+       function updateTodo() {
+        if (updateData == null) return;
+        setTodos((prevTodos) => prevTodos.map((todo) => todo.id === updateData.id ? { ...todo, text: todoInput } : todo));
     }
 
     return (
@@ -29,10 +55,10 @@ export default function CreateForm() {
                         onChange={(e) => setTodoInput(e.target.value)}
                     />
                     <button
-                        onClick={addTodo}
+                          onClick={() => updateData ? updateTodo() : addTodo()}
                         className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
                     >
-                        Add Todo
+                           {updateData ? "Update Todo" : "Add Todo"}
                     </button>
                 </div>
             </div>
