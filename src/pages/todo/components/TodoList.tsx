@@ -1,6 +1,7 @@
 import { Fragment } from "react/jsx-runtime";
 
 import { useTodoContext } from "../../../contexts/TodoContext";
+// import Something from "./Something";
 export default function TodoList()
 {
     const {todo} = useTodoContext()
@@ -12,9 +13,10 @@ export default function TodoList()
                 <ul>
                     {
                         todo.map((todo) => (
-                            <li className="py-2 px-2 border border-gray-200 rounded-lg mb-2">{todo.text}</li>
+                            <li className="py-2 px-2 border border-gray-200 rounded-lg mb-2" key={todo.id}>{todo.text}</li>
                         ))
                     }
+                    {/* <Something/> */}
                 </ul>
             </div>
         </Fragment>
