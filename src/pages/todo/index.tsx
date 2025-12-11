@@ -9,8 +9,8 @@ export default function TodoPage()
     return (
         <Fragment>
           <TodoProvider>
-            <CreateForm />
-            <TodoList />
+            {/* <CreateForm />
+            <TodoList /> */}
           </TodoProvider>
         </Fragment>
         
