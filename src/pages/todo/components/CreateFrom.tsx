@@ -2,6 +2,7 @@ import React, { useState, Fragment, useEffect } from "react";
 import type { Todo } from "../../../type";
 import { useTodoContext } from "../../../contexts/TodoContext";
 import { useLocation } from "react-router";
+import GlobalButton from "../../../components/GlobalButton";
 
 export default function CreateForm() {
     const { todo, setTodos } = useTodoContext();
@@ -60,6 +61,9 @@ export default function CreateForm() {
                     >
                            {updateData ? "Update Todo" : "Add Todo"}
                     </button>
+                </div>
+                <div>
+                    <GlobalButton onClick={()=>console.log("sojib")}     title="Update"   className="bg-red-600 hover:bg-red-700" />
                 </div>
             </div>
         </Fragment>
