@@ -1,15 +1,13 @@
-import { createRoot } from 'react-dom/client'
-import "./assets/style.css";
-import { RouterProvider } from 'react-router';
-import router from './router';
-import api from './api';
 
-api.get("/todos").then(response => {
-  console.log("API Status:", response.data);
-}).catch(error => {
-  console.error("API Error:", error);
-});
-createRoot(document.getElementById('root')!).render(
-  <RouterProvider router={router}>
-  </RouterProvider>
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import { Provider } from 'react-redux'
+import { RouterProvider } from 'react-router'
+import store from "./stores"; 
+import router from './routers/router';
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <Provider store={store}>
+    <RouterProvider router={router}></RouterProvider>
+  </Provider>
 )
